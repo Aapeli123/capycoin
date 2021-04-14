@@ -19,6 +19,12 @@ func handleConnection(conn *net.TCPConn) {
 	case "isAlive":
 		res := serializeMessage(IsAliveRes)
 		conn.Write(res)
+	case "addr":
+		// TODO Address book sharing...
+	case "newBlock":
+		// TODO Validate block and update chain
+	case "blockInfo":
+		// TODO Respond with data about specific block
 	default:
 		fmt.Println("Unknown operation: " + msg.OP)
 	}
