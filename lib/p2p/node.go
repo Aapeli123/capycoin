@@ -34,7 +34,7 @@ func IsAlive(addr *net.TCPAddr) (bool, error) {
 
 	response := parseMessage(res)
 	conn.Close()
-	return response.OP == AliveRes.OP, nil
+	return response.OP == IsAliveRes.OP, nil
 }
 
 // DiscoverNodes finds initial nodes in the p2p network

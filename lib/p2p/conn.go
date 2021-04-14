@@ -17,7 +17,7 @@ func handleConnection(conn *net.TCPConn) {
 	fmt.Println(msg)
 	switch msg.OP {
 	case "isAlive":
-		res := serializeMessage(AliveRes)
+		res := serializeMessage(IsAliveRes)
 		conn.Write(res)
 	default:
 		fmt.Println("Unknown operation: " + msg.OP)

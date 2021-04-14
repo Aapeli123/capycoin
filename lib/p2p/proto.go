@@ -8,8 +8,15 @@ import (
 
 // Message struct includes data from message
 type Message struct {
-	OP string
+	OP            string
+	BroadcastType int
 }
+
+// Use if the message should not be spread through the p2p network
+const BroadcastKeep = 0
+
+// Use if the message should be spread through the p2p network
+const BroadcastSpread = 1
 
 func parseMessage(data []byte) Message {
 	var msg Message
@@ -27,8 +34,10 @@ func serializeMessage(msg Message) []byte {
 }
 
 var IsAliveMsg = Message{
-	OP: "isAlive",
+	OP:            "isAlive",
+	BroadcastType: BroadcastKeep,
 }
-var AliveRes = Message{
-	OP: "isAliveRes",
+var IsAliveRes = Message{
+	OP:            "isAliveRes",
+	BroadcastType: BroadcastKeep,
 }
