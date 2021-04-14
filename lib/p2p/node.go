@@ -19,12 +19,27 @@ func CreateLocalNode(port int) error {
 	if err != nil {
 		return err
 	}
-	in.Close()
+	go listenForConnections(in)
 	return nil
+}
+
+func IsAlive(addr *net.TCPAddr) (bool, error) {
+	conn, err := net.DialTCP("tcp4", nil, addr)
+	if err != nil {
+		return false, err
+	}
+	msg := serializeMessage(IsAliveMsg)
+	conn.Write(msg)
+	res := readMsg(conn)
+
+	response := parseMessage(res)
+	conn.Close()
+	return response.OP == AliveRes.OP, nil
 }
 
 // DiscoverNodes finds initial nodes in the p2p network
 func DiscoverNodes() []*Node {
+	// Read addressbook
 	// TODO
 	return nil
 }
