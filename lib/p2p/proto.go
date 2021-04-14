@@ -1,6 +1,7 @@
 package p2p
 
 import (
+	"capycoin/lib/blockchain"
 	"encoding/json"
 )
 
@@ -8,8 +9,9 @@ import (
 
 // Message struct includes data from message
 type Message struct {
-	OP            string
-	BroadcastType int
+	OP            string      // Operation string
+	BroadcastType int         // Should data be shared through the network or not
+	Data          interface{} // Data, for example Block in the blockchain.
 }
 
 // Use if the message should not be spread through the p2p network
@@ -40,4 +42,25 @@ var IsAliveMsg = Message{
 var IsAliveRes = Message{
 	OP:            "isAliveRes",
 	BroadcastType: BroadcastKeep,
+}
+
+func SendBlockMsg(block *blockchain.Block) Message {
+	return Message{
+		OP:            "block",
+		BroadcastType: BroadcastSpread,
+		Data:          block,
+	}
+}
+
+type AddressData struct {
+	IP   string
+	Port int
+}
+
+func AddrMsg(data []AddressData) Message {
+	return Message{
+		OP:            "addr",
+		BroadcastType: BroadcastKeep,
+		Data:          data,
+	}
 }

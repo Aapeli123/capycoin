@@ -4,6 +4,20 @@ package p2p
 // When connecting to a new node share address book with them and add new nodes to addressbook
 var AddressBook []*Node
 
-func Broadcast() {
+// GetAddressData Converts addresbook to array of addressdata which is more easily sent over network
+func GetAddressData() []AddressData {
+	data := []AddressData{}
+
+	for _, addr := range AddressBook {
+		a := AddressData{
+			IP:   addr.IpAddr.String(),
+			Port: addr.IpAddr.Port,
+		}
+		data = append(data, a)
+	}
+	return data
+}
+
+func Broadcast(msg Message) {
 
 }

@@ -20,6 +20,7 @@ func handleConnection(conn *net.TCPConn) {
 		res := serializeMessage(IsAliveRes)
 		conn.Write(res)
 	case "addr":
+
 		// TODO Address book sharing...
 	case "newBlock":
 		// TODO Validate block and update chain
